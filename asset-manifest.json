@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/react-practice-addingNameList/static/css/main.ec262421.css",
+    "main.js": "/react-practice-addingNameList/static/js/main.de9eced2.js",
+    "static/js/787.0e8f4299.chunk.js": "/react-practice-addingNameList/static/js/787.0e8f4299.chunk.js",
+    "index.html": "/react-practice-addingNameList/index.html",
+    "main.ec262421.css.map": "/react-practice-addingNameList/static/css/main.ec262421.css.map",
+    "main.de9eced2.js.map": "/react-practice-addingNameList/static/js/main.de9eced2.js.map",
+    "787.0e8f4299.chunk.js.map": "/react-practice-addingNameList/static/js/787.0e8f4299.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ec262421.css",
+    "static/js/main.de9eced2.js"
+  ]
+}
