@@ -1,0 +1,9 @@
+.user-item {
+  border: 1px solid #888;
+  border-radius: 4px;
+  padding: 0.5rem 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  font-size: 1.4rem;
+  color: #000;
+}

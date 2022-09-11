@@ -1,23 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import UserForm from "./components/UserForm/UserForm";
+import UserList from "./components/UserList/UserList";
+import Modal from "./components/Modal/Modal";
+import ModalMessage from "./components/Modal/ModalMessage";
+import "./App.css";
+import { useState } from "react";
+
+const users = [];
 
 function App() {
+  const [usersData, setUsersData] = useState(users);
+  const [isModalShowed, setIsModalShowed] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const getFormDataHandler = function (userData) {
+    setUsersData((prevState) => [...prevState, userData]);
+  };
+
+  const getModalMessageHandler = function (message) {
+    setIsModalShowed(true);
+    setErrorMessage(message);
+  };
+
+  const closeModalHandler = function (e) {
+    if (isModalShowed && (e.code === "Escape" || e.type === "click")) {
+      setIsModalShowed(false);
+      return;
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div onKeyDown={closeModalHandler}>
+      {isModalShowed && (
+        <Modal onClick={closeModalHandler}>
+          <ModalMessage
+            errorMessage={errorMessage}
+            onCloseModal={closeModalHandler}
+          />
+        </Modal>
+      )}
+      <UserForm
+        tabIndex={isModalShowed ? -1 : ""}
+        onGetFormData={getFormDataHandler}
+        onGetModalMessage={getModalMessageHandler}
+      />
+      {usersData.length > 0 && <UserList users={usersData} />}
     </div>
   );
 }

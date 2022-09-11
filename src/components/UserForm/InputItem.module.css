@@ -1,0 +1,17 @@
+.input-item {
+  margin-bottom: 1rem;
+}
+
+.input-item__label,
+.input-item__input {
+  display: block;
+}
+
+.input-item__label {
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.input-item__input {
+  width: 100%;
+}
