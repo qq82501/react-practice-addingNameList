@@ -2,31 +2,30 @@ import InputItem from "./InputItem";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 import styles from "./UserForm.module.css";
-import { useState } from "react";
+import React, { useRef } from "react";
 
 function UserForm(props) {
-  const [enteredUsername, setEnteredUsername] = useState("");
-  const [enteredAge, setEnteredAge] = useState();
-
-  const getUserHandler = function (e) {
-    setEnteredUsername(e.target.value);
-  };
-  const getAgeHandler = function (e) {
-    setEnteredAge(+e.target.value);
-  };
+  //Instead of Ref, why do not use State?
+  //In this case, we only want to get input's values then pass then to App.js.
+  //this action is read-only and doesn't relate to re-rendering, so we use Ref instead of state.
+  const refInputUsername = useRef();
+  const refInputAge = useRef();
 
   const submitHandler = function (e) {
     e.preventDefault();
+    const enteredUsername = refInputUsername.current.value;
+    const enteredAge = +refInputAge.current.value;
 
     if (enteredUsername.trim().length && enteredAge > 0) {
       const userData = {
         username: enteredUsername,
-        age: +enteredAge,
+        age: enteredAge,
         id: Math.random(),
       };
       props.onGetFormData(userData);
-      setEnteredUsername("");
-      setEnteredAge("");
+      refInputUsername.current.value = "";
+      refInputAge.current.value = "";
+      refInputUsername.current.focus();
       return;
     }
 
@@ -35,7 +34,6 @@ function UserForm(props) {
 
   const submitErrorChecker = function (username, age) {
     let errorMessage = "";
-    console.log(age);
 
     if (!username.trim().length || !age) {
       errorMessage = `Please enter valid username and age (non-empty values required)`;
@@ -51,21 +49,20 @@ function UserForm(props) {
         className={`${styles["user-form"]} ${props.className}`}
         onSubmit={submitHandler}
       >
+        {/* In general, ref cannot be used in Customized Component, in order to make it work, we must apply "forwardRef" on the component ref attatched. */}
         <InputItem
           labelName="Username"
           id="username"
           inputType="text"
-          value={enteredUsername}
-          onGetInput={getUserHandler}
           tabIndex={props.tabIndex}
+          ref={refInputUsername}
         />
         <InputItem
           labelName="Age (Years)"
           id="age"
           inputType="number"
-          value={enteredAge}
-          onGetInput={getAgeHandler}
           tabIndex={props.tabIndex}
+          ref={refInputAge}
         />
         <Button btnText="Add User" type="submit" tabIndex={props.tabIndex} />
       </form>

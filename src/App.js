@@ -4,6 +4,7 @@ import Modal from "./components/Modal/Modal";
 import ModalMessage from "./components/Modal/ModalMessage";
 import "./App.css";
 import { useState } from "react";
+import ReactDOM from "react-dom";
 
 const users = [];
 
@@ -30,14 +31,16 @@ function App() {
 
   return (
     <div onKeyDown={closeModalHandler}>
-      {isModalShowed && (
-        <Modal onClick={closeModalHandler}>
-          <ModalMessage
-            errorMessage={errorMessage}
-            onCloseModal={closeModalHandler}
-          />
-        </Modal>
-      )}
+      {isModalShowed &&
+        ReactDOM.createPortal(
+          <Modal onClick={closeModalHandler}>
+            <ModalMessage
+              errorMessage={errorMessage}
+              onCloseModal={closeModalHandler}
+            />
+          </Modal>,
+          document.querySelector("#modal_root")
+        )}
       <UserForm
         tabIndex={isModalShowed ? -1 : ""}
         onGetFormData={getFormDataHandler}
